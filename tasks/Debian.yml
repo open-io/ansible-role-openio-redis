@@ -2,7 +2,7 @@
 - name: Install packages
   package:
     name: "{{ pkg }}"
-    state: present
+    state: "{{ 'latest' if openio_redis_package_upgrade else 'present' }}"
   with_items: "{{ redis_packages }}"
   loop_control:
     loop_var: pkg

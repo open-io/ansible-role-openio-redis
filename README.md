@@ -40,6 +40,7 @@ openio_redis_inventory_groupname
 | `openio_redis_tcp_keepalive` | `0` | The specified value (in seconds) is the period used to send ACKs to clients |
 | `openio_redis_timeout` | `0` | Close the connection after a client is idle for N seconds |
 | `openio_redis_volume` | `"/var/lib/oio/sds/{{ openio_redis_namespace }}/{{ openio_redis_type }}-{{ openio_redis_serviceid }}"` | The DB will be written inside this directory |
+| `openio_redis_package_upgrade` | `false` | Set the packages to the latest version (to be set in extra_vars) |
 
 ## Dependencies
 

@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+#
+# Redis database backups
+#
+{% set dump = openio_redis_volume + "/dump.rdb" -%}
+{%- for backup in openio_redis_backups %}
+# {{ backup.name }}
+{% set backup_dir = openio_redis_backup_directory + "/" + backup.name -%}
+{% set dump_backup = backup_dir + "/dump-$(date +\%Y\%m\%d\%H\%M).rdb" -%}
+{% if openio_redis_backup_gzip -%}
+{{ backup.cron }} root gzip -c {{ dump }} > {{ dump_backup }}.gz ; find {{ backup_dir }} -type f -mtime +{{ backup.retention }} -delete
+{% else -%}
+{{ backup.cron }} root cp -p {{ dump }} {{ dump_backup }} ; find {{ backup_dir }} -type f -mtime +{{ backup.retention }} -delete
+{% endif -%}
+{% endfor %}

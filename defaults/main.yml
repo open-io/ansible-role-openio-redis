@@ -50,4 +50,14 @@ openio_redis_provision_only: false
 openio_redis_package_upgrade: "{{ openio_package_upgrade | d(false) }}"
 
 openio_redis_configuration_split: true
+
+openio_redis_backup_directory: "{{ openio_redis_volume }}/backup"
+openio_redis_backup_gzip: true
+# backups will be saved to {{ openio_redis_backup_directory }}/{{ backup name }}/dump-$(date +%Y%m%d%H%M).rdb[.gz]
+openio_redis_backups: []
+#  - { "name": "hourly",  "cron": "11 * * * *",     "retention": "1"}
+#  - { "name": "daily",   "cron": "21 1 * * *",     "retention": "7" }
+#  - { "name": "weekly",  "cron": "31 2 * * sun",   "retention": "30" }
+#  - { "name": "monthly", "cron": "41 3 1 * *",     "retention": "183" }
+#  - { "name": "yearly",  "cron": "51 4 1 dec *",   "retention": "370" }
 ...

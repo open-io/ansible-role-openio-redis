@@ -170,6 +170,66 @@
       tags: configure
   when: openio_redis_configuration_split
 
+- block:
+    - name: Ensure backup name is valid
+      assert:
+        that: 'item.name | d("") | regex_search("^[a-zA-Z0-9_\.-]+$")'
+        fail_msg: 'Backup name is not valid (only letters, numbers, dash, underscore and dot) for "{{ item.name }}"'
+      with_items: "{{ openio_redis_backups }}"
+
+    - name: Ensure backup cron is valid
+      assert:
+        that: "item.cron \
+              | d(\"\") \
+              | regex_search(\"^\\s*(\
+              @(annualy|yearly|monthly|weekly|daily|hourly|reboot)\
+              |((\\d+(-\\d+)?|\\*)(/\\d+)?(,(\\d+(-\\d+)?|\\*)(/\\d+)?)*\\s+){3}\
+              ((\\d+|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\
+              (-(\\d+|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec))?|\\*)\
+              (/\\d+)?(,((\\d+|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\
+              (-(\\d+|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec))?|\\*)\
+              (/\\d+)?)*\\s+((\\d+|mon|tue|wed|thu|fri|sat|sun)\
+              (-(\\d+|mon|tue|wed|thu|fri|sat|sun))?|\\*)(/\\d+)?(,((\\d+|mon|tue|wed|thu|fri|sat|sun)\
+              (-(\\d+|mon|tue|wed|thu|fri|sat|sun))?|\\*)(/\\d+)?)*)\\s*$\")"
+        fail_msg: 'Backup cron ({{ item.cron }}) is not valid (must match crontab(5) syntax) for "{{ item.name }}"'
+      with_items: "{{ openio_redis_backups }}"
+
+    - name: Ensure backup retention is valid
+      assert:
+        that: 'item.retention | d("") | regex_search("^[1-9][0-9]*$")'
+        fail_msg: 'Backup retention ({{ item.retention }}) is not valid (positive integer) for "{{ item.name }}"'
+      with_items: "{{ openio_redis_backups }}"
+
+    - name: Ensure backup directories exists
+      file:
+        path: "{{ openio_redis_backup_directory }}/{{ item.name }}"
+        state: directory
+        owner: "openio"
+        group: "openio"
+        mode: "0644"
+      with_items: "{{ openio_redis_backups }}"
+
+    - name: Ensure /etc/cron.d directory exists
+      file:
+        path: "/etc/cron.d"
+        state: directory
+        owner: "root"
+        group: "root"
+        mode: "0755"
+      when: openio_redis_backups
+
+    - name: "Redis database backup crontab"
+      template:
+        src: "cron.backup.j2"
+        dest: "/etc/cron.d/99-{{ openio_redis_servicename }}"
+        owner: root
+        group: root
+        mode: 0644
+      when: openio_redis_backups
+
+  when: openio_redis_type == 'redis'
+  tags: configure
+
 - name: "restart redis to apply the new configuration"
   shell: |
     gridinit_cmd reload

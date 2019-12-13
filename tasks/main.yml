@@ -42,6 +42,14 @@
     gather_subset: min
   tags: configure
 
+- name: Set fake facts for check mode
+  set_fact:
+    ansible_local:
+      redis: {}
+      redissentinel: {}
+  when: ansible_check_mode
+  tags: configure
+
 - name: Register master informations
   set_fact:
     master_host: "{{ ansible_local[openio_redis_type]
@@ -197,6 +205,7 @@
         - openio_redis_type == 'redis'
         - master_host not in ansible_all_ipv4_addresses
       tags: configure
+      ignore_errors: "{{ ansible_check_mode }}"
 
     - name: check redis
       command: "redis-cli -h {{ openio_redis_bind_address }} -p {{ openio_redis_bind_port }} INFO"

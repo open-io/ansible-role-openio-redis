@@ -11,9 +11,12 @@ command = 'redis-server'
 oio_conf_dir = '/etc/oio/sds'
 conf_files_pattern = ['redissentinel.conf', 'redissentinel-*.conf']
 
+REDIS_TIMEOUT = 5
+
+
 def cmd_exists(cmd):
     return any(
-        os.access(os.path.join(path, cmd), os.X_OK) 
+        os.access(os.path.join(path, cmd), os.X_OK)
         for path in os.environ["PATH"].split(os.pathsep)
     )
 
@@ -63,7 +66,9 @@ if facts['installed']:
             try:
                 r = redis.StrictRedis(
                         host = setting['bind'],
-                        port = setting['port'])
+                        port = setting['port'],
+                        timeout = REDIS_TIMEOUT,
+                    )
                 infos = r.info()
                 setting['redis_mode'] = str(infos['redis_mode'])
                 monitors = []

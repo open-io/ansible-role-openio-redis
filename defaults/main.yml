@@ -60,4 +60,14 @@ openio_redis_backups: []
 #  - { "name": "weekly",  "cron": "31 2 * * sun",   "retention": "30" }
 #  - { "name": "monthly", "cron": "41 3 1 * *",     "retention": "183" }
 #  - { "name": "yearly",  "cron": "51 4 1 dec *",   "retention": "370" }
+
+openio_redis_appendonly: "yes"
+openio_redis_appendfilename: "appendonly.aof"
+openio_redis_appendfsync: everysec
+openio_redis_no_appendfsync_on_rewrite: "yes"
+openio_redis_auto_aof_rewrite_percentage: 100
+openio_redis_auto_aof_rewrite_min_size: 64mb
+openio_redis_aof_load_truncated: "yes"
+openio_redis_aof_use_rdb_preamble: "yes"
+openio_redis_aof_rewrite_incremental_fsync: "yes"
 ...

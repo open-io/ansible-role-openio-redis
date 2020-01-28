@@ -28,7 +28,7 @@ An Ansible role for redis. Specifically, the responsibilities of this role are t
 | `openio_redis_bind_address` | `"{{ hostvars[inventory_hostname]['ansible_' + openio_redis_bind_interface]['ipv4']['address'] }}"` | The address that this redis instance will run on |
 | `openio_redis_bind_interface` | `"{{ ansible_default_ipv4.alias }}"` | The interface that this redis instance will run on |
 | `openio_redis_databases` | `16` | Set the number of databases |
-| `openio_redis_down_after` | `1000` | Number of milliseconds the master (or any attached slave or sentinel) should be unreachable |
+| `openio_redis_down_after` | `5000` | Number of milliseconds the master (or any attached slave or sentinel) should be unreachable |
 openio_redis_inventory_groupname
 | `openio_redis_inventory_groupname` | `redis` | Set your inventory groupname |
 | `openio_redis_loglevel` | `notice` | Specify the server verbosity level |

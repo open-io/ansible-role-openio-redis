@@ -62,11 +62,19 @@ if facts['installed']:
                         if line.startswith('dir'):
                             setting['dir'] = unwrap_quotes(line)
             try:
-                r = redis.StrictRedis(
-                        host = setting['bind'],
-                        port = setting['port'],
-                        timeout = REDIS_TIMEOUT,
-                    )
+                try:
+                    r = redis.StrictRedis(
+                            host = setting['bind'],
+                            port = setting['port'],
+                            timeout = REDIS_TIMEOUT,
+                        )
+                except TypeError as e:
+                    r = redis.StrictRedis(
+                            host = setting['bind'],
+                            port = setting['port'],
+                            socket_connect_timeout = REDIS_TIMEOUT,
+                        )
+                    
                 infos = r.info()
                 setting['role'] = infos['role']
                 setting['redis_mode'] = str(infos['redis_mode'])

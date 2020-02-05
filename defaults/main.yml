@@ -64,7 +64,7 @@ openio_redis_backups: []
 openio_redis_appendonly: "yes"
 openio_redis_appendfilename: "appendonly.aof"
 openio_redis_appendfsync: everysec
-openio_redis_no_appendfsync_on_rewrite: "yes"
+openio_redis_no_appendfsync_on_rewrite: "no"
 openio_redis_auto_aof_rewrite_percentage: 100
 openio_redis_auto_aof_rewrite_min_size: 64mb
 openio_redis_aof_load_truncated: "yes"

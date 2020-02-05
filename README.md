@@ -36,7 +36,7 @@ openio_redis_inventory_groupname
 | `openio_redis_master_groupname` | `"{{ openio_redis_namespace }}-master-1"` | Set of instances |
 | `openio_redis_maxclients` | `10000` | Set the max number of connected clients at the same time |
 | `openio_redis_maxmemory` | `0` | Set a memory usage limit to the specified amount of bytes |
-| `openio_redis_no_appendfsync_on_rewrite` | `"yes"` | Automatic rewrite of the append only file |
+| `openio_redis_no_appendfsync_on_rewrite` | `"no"` | Automatic rewrite of the append only file |
 | `openio_redis_type` | `redis` | The redis mode : `redis` or `redissentinel` |
 | `openio_redis_type_details` | `dict` | Dict of `port` and `service_name` for a `openio_redis_type` |
 | `openio_redis_namespace` | `"OPENIO"` | Namespace |

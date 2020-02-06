@@ -108,7 +108,7 @@
   tags: configure
 
 - block:
-    - name: Generate {{ openio_redis_type }} configur7ation
+    - name: Generate {{ openio_redis_type }} configuration
       lineinfile:
         create: true
         dest: "{{ openio_redis_sysconfig_dir }}/\

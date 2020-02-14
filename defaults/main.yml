@@ -1,4 +1,3 @@
-# roles/redis/defaults/main.yml
 ---
 openio_redis_namespace: "{{ namespace | default('OPENIO') }}"
 openio_redis_serviceid: "{{ 0 + openio_legacy_serviceid | d(0) | int }}"
@@ -44,8 +43,8 @@ openio_redis_quorum:
 openio_redis_down_after: 5000
 openio_redis_auth_pass: ""
 
-openio_redis_gridinit_file_prefix: ""
 openio_redis_gridinit_dir: "/etc/gridinit.d/{{ openio_redis_namespace }}"
+openio_redis_gridinit_file_prefix: ""
 openio_redis_provision_only: false
 openio_redis_package_upgrade: "{{ openio_package_upgrade | d(false) }}"
 
@@ -70,4 +69,11 @@ openio_redis_auto_aof_rewrite_min_size: 64mb
 openio_redis_aof_load_truncated: "yes"
 openio_redis_aof_use_rdb_preamble: "yes"
 openio_redis_aof_rewrite_incremental_fsync: "yes"
+
+openio_redis_sysconfig_dir: "/etc/oio/sds/{{ openio_redis_namespace }}"
+openio_redis_servicename: "{{ openio_redis_type }}-{{ openio_redis_serviceid }}"
+
+openio_redis_definition_file: >
+  "{{ openio_redis_sysconfig_dir }}/
+  {{ openio_redis_servicename }}/{{ openio_redis_servicename }}.conf"
 ...

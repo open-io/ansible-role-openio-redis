@@ -43,9 +43,9 @@ openio_redis_quorum:
 openio_redis_down_after: 5000
 openio_redis_auth_pass: ""
 
-openio_redis_gridinit_dir: "/etc/gridinit.d/{{ openio_redis_namespace }}"
-openio_redis_gridinit_file_prefix: ""
-openio_redis_provision_only: false
+openio_redis_gridinit_dir: "{{ openio_gridinit_d | d('/etc/gridinit.d/') }}"
+openio_redis_gridinit_file_prefix: "{{ openio_redis_namespace }}-"
+openio_redis_provision_only: "{{ openio_maintenance_mode | d(false) | bool }}"
 openio_redis_package_upgrade: "{{ openio_package_upgrade | d(false) }}"
 
 openio_redis_configuration_split: true

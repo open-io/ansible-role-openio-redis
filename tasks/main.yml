@@ -77,7 +77,6 @@
     group: "{{ item.group | default('openio') }}"
     mode: "{{ item.mode | default(0755) }}"
   with_items:
-    - path: "/etc/gridinit.d/{{ openio_redis_namespace }}"
     - path: "{{ openio_redis_sysconfig_dir }}/{{ openio_redis_servicename }}"
     - path: "{{ openio_redis_volume }}"
     - path: "{{ openio_redis_pid_directory }}"

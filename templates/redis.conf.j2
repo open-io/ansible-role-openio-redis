@@ -30,7 +30,9 @@ no-appendfsync-on-rewrite {{ openio_redis_no_appendfsync_on_rewrite }}
 auto-aof-rewrite-percentage {{ openio_redis_auto_aof_rewrite_percentage }}
 auto-aof-rewrite-min-size {{ openio_redis_auto_aof_rewrite_min_size }}
 aof-load-truncated {{ openio_redis_aof_load_truncated }}
-{% if openio_redis_appendonly == "yes" %}aof-use-rdb-preamble {{ openio_redis_aof_use_rdb_preamble }}{% endif %}
+{% if openio_redis_appendonly == "yes" %}
+aof-use-rdb-preamble {{ openio_redis_aof_use_rdb_preamble }}
+{% endif %}
 aof-rewrite-incremental-fsync {{ openio_redis_aof_rewrite_incremental_fsync }}
 lua-time-limit 5000
 slowlog-log-slower-than 10000

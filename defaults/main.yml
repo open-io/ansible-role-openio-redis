@@ -25,6 +25,8 @@ openio_redis_tcp_backlog_queue_size: 511
 openio_redis_stacktrace_size_limit: 8192
 openio_redis_slave_priority: 100
 
+openio_redis_latency_monitor_threshold: 0
+
 openio_redis_loglevel: notice
 openio_redis_databases: 16
 openio_redis_saves:

@@ -33,7 +33,7 @@ aof-load-truncated yes
 lua-time-limit 5000
 slowlog-log-slower-than 10000
 slowlog-max-len 128
-latency-monitor-threshold 0
+latency-monitor-threshold {{ openio_redis_latency_monitor_threshold }}
 notify-keyspace-events ""
 hash-max-ziplist-entries 512
 hash-max-ziplist-value 64

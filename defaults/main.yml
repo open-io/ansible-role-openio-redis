@@ -50,4 +50,14 @@ openio_redis_provision_only: false
 openio_redis_package_upgrade: "{{ openio_package_upgrade | d(false) }}"
 
 openio_redis_configuration_split: true
+
+openio_redis_appendonly: "no"
+openio_redis_appendfilename: "appendonly.aof"
+openio_redis_appendfsync: everysec
+openio_redis_no_appendfsync_on_rewrite: "yes"
+openio_redis_auto_aof_rewrite_percentage: 100
+openio_redis_auto_aof_rewrite_min_size: 64mb
+openio_redis_aof_load_truncated: "yes"
+openio_redis_aof_use_rdb_preamble: "yes"
+openio_redis_aof_rewrite_incremental_fsync: "yes"
 ...

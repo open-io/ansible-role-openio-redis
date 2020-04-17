@@ -23,13 +23,15 @@ slave-priority {{ openio_redis_slave_priority }}
 repl-diskless-sync no
 repl-diskless-sync-delay 5
 repl-disable-tcp-nodelay no
-appendonly no
-appendfilename "appendonly.aof"
-appendfsync everysec
-no-appendfsync-on-rewrite no
-auto-aof-rewrite-percentage 100
-auto-aof-rewrite-min-size 64mb
-aof-load-truncated yes
+appendonly {{ openio_redis_appendonly }}
+appendfilename "{{ openio_redis_appendfilename }}"
+appendfsync {{ openio_redis_appendfsync }}
+no-appendfsync-on-rewrite {{ openio_redis_no_appendfsync_on_rewrite }}
+auto-aof-rewrite-percentage {{ openio_redis_auto_aof_rewrite_percentage }}
+auto-aof-rewrite-min-size {{ openio_redis_auto_aof_rewrite_min_size }}
+aof-load-truncated {{ openio_redis_aof_load_truncated }}
+{% if openio_redis_appendonly == "yes" %}aof-use-rdb-preamble {{ openio_redis_aof_use_rdb_preamble }}{% endif %}
+aof-rewrite-incremental-fsync {{ openio_redis_aof_rewrite_incremental_fsync }}
 lua-time-limit 5000
 slowlog-log-slower-than 10000
 slowlog-max-len 128
@@ -48,6 +50,5 @@ client-output-buffer-limit normal 0 0 0
 client-output-buffer-limit slave 256mb 64mb 60
 client-output-buffer-limit pubsub 32mb 8mb 60
 hz 10
-aof-rewrite-incremental-fsync yes
 maxclients {{ openio_redis_maxclients }}
 maxmemory {{ openio_redis_maxmemory }}

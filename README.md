@@ -16,7 +16,15 @@ An Ansible role for redis. Specifically, the responsibilities of this role are t
 
 | Variable   | Default | Comments (type)  |
 | :---       | :---    | :---             |
+| `openio_redis_appendonly` | `no` | Turn on the AOF  |
+| `openio_redis_appendfilename` | `"appendonly.aof"` | The name of the append only file  |
+| `openio_redis_appendfsync` | `everysec` | Once per second, explicitly syncs write commands to disk  |
 | `openio_redis_auth_pass` | `""` | Set the password to use to authenticate with the master and slaves |
+| `openio_redis_aof_load_truncated` | `"yes"` |  Allow Redis to start without fix AOF file with `redis-check-aof`|
+| `openio_redis_aof_rewrite_incremental_fsync` | `"yes"` |  the AOF file will be fsync-ed every 32 MB of data generated |
+| `openio_redis_aof_use_rdb_preamble` | `"yes"` | Allow Redis to use an RDB preamble in the AOF file for faster rewrites and recoveries |
+| `openio_redis_auto_aof_rewrite_min_size` | `64mb` | Minimal size before rewrite the AOF file |
+| `openio_redis_auto_aof_rewrite_percentage` | `100` | Specify a percentage of zero in order to disable the automatic AOF rewrite feature |
 | `openio_redis_bind_address` | `"{{ hostvars[inventory_hostname]['ansible_' + openio_redis_bind_interface]['ipv4']['address'] }}"` | The address that this redis instance will run on |
 | `openio_redis_bind_interface` | `"{{ ansible_default_ipv4.alias }}"` | The interface that this redis instance will run on |
 | `openio_redis_databases` | `16` | Set the number of databases |
@@ -28,6 +36,7 @@ openio_redis_inventory_groupname
 | `openio_redis_master_groupname` | `"{{ openio_redis_namespace }}-master-1"` | Set of instances |
 | `openio_redis_maxclients` | `10000` | Set the max number of connected clients at the same time |
 | `openio_redis_maxmemory` | `0` | Set a memory usage limit to the specified amount of bytes |
+| `openio_redis_no_appendfsync_on_rewrite` | `"yes"` | Automatic rewrite of the append only file |
 | `openio_redis_type` | `redis` | The redis mode : `redis` or `redissentinel` |
 | `openio_redis_type_details` | `dict` | Dict of `port` and `service_name` for a `openio_redis_type` |
 | `openio_redis_namespace` | `"OPENIO"` | Namespace |

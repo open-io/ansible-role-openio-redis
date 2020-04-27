@@ -51,7 +51,7 @@ openio_redis_package_upgrade: "{{ openio_package_upgrade | d(false) }}"
 
 openio_redis_configuration_split: true
 
-openio_redis_appendonly: "no"
+openio_redis_appendonly: "yes"
 openio_redis_appendfilename: "appendonly.aof"
 openio_redis_appendfsync: everysec
 openio_redis_no_appendfsync_on_rewrite: "yes"

@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/open-io/ansible-role-openio-redis.svg?branch=master)](https://travis-ci.org/open-io/ansible-role-openio-redis)
+[![Build Status](https://travis-ci.org/open-io/ansible-role-openio-redis.svg?branch=20.04)](https://travis-ci.org/open-io/ansible-role-openio-redis)
 # Ansible role `redis`
 
 An Ansible role for redis. Specifically, the responsibilities of this role are to:

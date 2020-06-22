@@ -12,33 +12,4 @@
   retries: 5
   delay: 2
   tags: install
-
-- name: Set the tuned profile
-  copy:
-    src: tuned.conf
-    dest: /etc/tuned/redis/
-    mode: 0755
-  when:
-    - openio_redis_type == "redis"
-    - ansible_virtualization_type != 'docker'
-  tags: install
-
-- name: Get tuned profile.
-  command: /usr/sbin/tuned-adm active
-  register: tuned_active
-  changed_when: false
-  ignore_errors: true
-  when:
-    - openio_redis_type == "redis"
-    - ansible_virtualization_type != 'docker'
-  tags: install
-
-- name: Set redis tuned profile.
-  command: "/usr/sbin/tuned-adm profile redis"
-  ignore_errors: "{{ ansible_check_mode }}"
-  when:
-    - openio_redis_type == "redis"
-    - ansible_virtualization_type != 'docker'
-    - "'redis' not in tuned_active.stdout"
-  tags: install
 ...

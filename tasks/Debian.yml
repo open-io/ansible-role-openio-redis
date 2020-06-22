@@ -20,6 +20,7 @@
     reload: true
     state: present
   when:
+    - ansible_distribution_release == "xenial"
     - openio_redis_type == "redis"
     - ansible_virtualization_type != 'docker'
   tags: install
@@ -29,6 +30,7 @@
     echo never > /sys/kernel/mm/transparent_hugepage/defrag"
   ignore_errors: true
   when:
+    - ansible_distribution_release == "xenial"
     - openio_redis_type == "redis"
     - ansible_virtualization_type != 'docker'
   tags: install
@@ -47,6 +49,7 @@
         daemon_reload: true
       tags: install
   when:
+    - ansible_distribution_release == "xenial"
     - openio_redis_type == "redis"
     - ansible_virtualization_type != 'docker'
 ...

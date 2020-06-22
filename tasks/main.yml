@@ -16,6 +16,41 @@
     - "{{ ansible_os_family }}.yml"
   tags: install
 
+- block:
+    - name: Set the tuned profile
+      copy:
+        src: tuned.conf
+        dest: /etc/tuned/redis/
+        mode: 0755
+      when:
+        - openio_redis_type == "redis"
+        - ansible_virtualization_type != 'docker'
+      tags: install
+
+    - name: Get tuned profile.
+      command: /usr/sbin/tuned-adm active
+      register: tuned_active
+      changed_when: false
+      ignore_errors: true
+      when:
+        - openio_redis_type == "redis"
+        - ansible_virtualization_type != 'docker'
+      tags: install
+
+    - name: Set redis tuned profile.
+      command: "/usr/sbin/tuned-adm profile redis"
+      ignore_errors: "{{ ansible_check_mode }}"
+      when:
+        - openio_redis_type == "redis"
+        - ansible_virtualization_type != 'docker'
+        - "'redis' not in tuned_active.stdout"
+      tags: install
+  when:
+    - not ( openio_tuned | d(false))
+    - >
+      ansible_distribution_release == 'bionic'
+      or ansible_distribution_major_version == "7"
+
 - name: Make sure Ansible fact directory exists
   file:
     path: /etc/ansible/facts.d

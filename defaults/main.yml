@@ -9,7 +9,7 @@ openio_redis_volume:
   "/var/lib/oio/sds/{{ openio_redis_namespace }}/{{ openio_redis_type }}-{{ openio_redis_serviceid }}"
 openio_redis_pid_directory:
   "/run/oio/sds/{{ openio_redis_namespace }}"
-openio_redis_bind_interface: "{{ ansible_default_ipv4.alias }}"
+openio_redis_bind_interface: "{{ openio_bind_interface | d(ansible_default_ipv4.alias) }}"
 openio_redis_bind_address:
   "{{ openio_bind_address \
     | default(hostvars[inventory_hostname]['ansible_' + openio_redis_bind_interface]['ipv4']['address']) }}"

@@ -69,6 +69,14 @@
       | default(openio_redis_master.port, true) }}"
   tags: configure
 
+- name: Register master informations (check mode)
+  # check /etc/ansible/facts.d/redissentinel.fact to find the real master
+  set_fact:
+    master_host: "ip_master_check_mode"
+    master_port: 6011
+  when: ansible_check_mode
+  tags: configure
+
 - name: Ensure directories exists
   file:
     path: "{{ item.path }}"
